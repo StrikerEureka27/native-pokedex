@@ -12,6 +12,7 @@ import {decrement, increment} from './AppSlice';
 import {Provider} from 'react-redux';
 import {store} from './src/app/store';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import type {RootState} from './src/app/store';
 
 import type {PropsWithChildren} from 'react';
 import {
@@ -68,7 +69,7 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 }
 
 function Counter(): React.JSX.Element {
-  const count = useSelector(state => state.counter.value);
+  const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
 
   return (
@@ -157,11 +158,7 @@ function MyTabs(): React.JSX.Element {
 }
 
 function Article(): React.JSX.Element {
-  return (
-    
-      <MyTabs/>
-      
-  );
+  return <MyTabs />;
 }
 
 const Drawer = createDrawerNavigator();
@@ -189,7 +186,6 @@ function MyDrawer() {
     </Drawer.Navigator>
   );
 }
-
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
