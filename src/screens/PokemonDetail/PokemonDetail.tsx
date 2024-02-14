@@ -24,9 +24,10 @@ function PokemonDetail({route}): React.JSX.Element {
           <Text style={styles.titleText}>Bulbasaur</Text>
         </View>
       </View>
-      <View style={[styles.statscontainer, {width: ScreenWidth}]}>
-        <View style={styles.imageContainer}>
-          <FastImage
+      <View style={[styles.statscontainer]}>
+        <Text>Hello</Text>
+        <View >
+          {/* <FastImage
             style={{
               width: 200,
               height: 200,
@@ -40,7 +41,7 @@ function PokemonDetail({route}): React.JSX.Element {
               priority: FastImage.priority.normal,
             }}
             resizeMode={FastImage.resizeMode.contain}
-          />
+          /> */}
         </View>
       </View>
     </View>
@@ -53,19 +54,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   statscontainer: {
-    backgroundColor: 'white',
+    flex: 1,
+    backgroundColor: 'purple',
   },
   imageContainer: {
-    zIndex: 1,
     backgroundColor: 'blue',
     alignItems: 'center',
   },
   titleText: {
+    height: 350, 
     color: 'white',
     fontWeight: 'bold',
     fontSize: 30,
   },
   titleContainer: {
+    backgroundColor: 'blue',
     alignItems: 'center',
   },
   linearGradient: {
