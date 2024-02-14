@@ -4,6 +4,7 @@ import type {RootState} from '../../app/store';
 import {useDispatch, useSelector} from 'react-redux';
 import Section from '../../components/Section/Section';
 import {decrement, increment} from '../../../AppSlice';
+import BackButton from '../../components/Button/BackButton';
 
 function Counter(): React.JSX.Element {
   const count = useSelector((state: RootState) => state.counter.value);
@@ -24,6 +25,7 @@ function Counter(): React.JSX.Element {
           dispatch(increment());
         }}
       />
+      <BackButton />
     </Section>
   );
 }

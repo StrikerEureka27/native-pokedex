@@ -42,6 +42,7 @@ target 'AwesomeProject' do
   target 'AwesomeProjectTests' do
     inherit! :complete
     # Pods for testing
+    pod 'RNBootSplash', :path => '../node_modules/react-native-bootsplash'
   end
 
   post_install do |installer|
@@ -53,3 +54,4 @@ target 'AwesomeProject' do
     )
   end
 end
+

@@ -1,22 +1,18 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useState} from 'react';
 import {Provider} from 'react-redux';
 import {store} from './src/app/store';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {StyleSheet, useColorScheme} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Feed from './src/screens/Feed/Feed';
-import Article from './src/screens/Article/Article';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {StyleSheet} from 'react-native';
+import Home from './src/screens/Home/Home';
+import Moves from './src/screens/Moves/Moves';
+import Items from './src/screens/Items/Items';
+import Abilities from './src/screens/Moves/Moves';
+import Pokemons from './src/screens/Pokemons/Pokemons';
 import {NavigationContainer} from '@react-navigation/native';
-import Helloworld from './src/screens/Home/Home';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import AnimatedBootSplash from './src/screens/SplashScreen/SplashScreen';
+import PokemonDetail from './src/screens/PokemonDetail/PokemonDetail';
 
 const Drawer = createDrawerNavigator();
 
@@ -24,35 +20,64 @@ function MyDrawer() {
   return (
     <Drawer.Navigator
       id="HomeNavigator"
-      initialRouteName="HelloWorld"
+      initialRouteName="Pokemons"
       backBehavior="order"
       detachInactiveScreens={true}
-      // drawerPosition={right}
       screenOptions={{
         drawerStyle: {
-          backgroundColor: '#d1d1d1',
+          backgroundColor: 'white',
+        },
+        headerTintColor: 'white',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          color: 'white',
+          fontSize: 20,
+          right: 70,
+        },
+        headerStyle: {
+          backgroundColor: '#FF0000',
         },
         drawerPosition: 'left',
-        // drawerStatusBarAnimation: 'fade',
-        // drawerType: "slide",
-        // overlayColor: 'transparent',
       }}>
-      <Drawer.Screen name="HelloWorld" component={Helloworld} />
-      <Drawer.Screen name="Feed" component={Feed} />
-      <Drawer.Screen name="Article" component={Article} />
+      <Drawer.Screen
+        name="Home"
+        component={Home}
+        options={{
+          title: 'Your pokedex',
+        }}
+      />
+      <Drawer.Screen name="Pokemons" component={Pokemons} />
+      <Drawer.Screen name="Abilities" component={Abilities} />
+      <Drawer.Screen name="Moves" component={Moves} />
+      <Drawer.Screen name="Items" component={Items} />
+      <Drawer.Screen
+        name="PokemonDetail"
+        options={{
+          title: '',
+        }}
+        component={PokemonDetail}
+      />
     </Drawer.Navigator>
   );
 }
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const [visible, setVisible] = useState(true);
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <MyDrawer />
+      <NavigationContainer
+        onReady={() => {
+          setVisible(false);
+        }}>
+        {visible ? (
+          <AnimatedBootSplash
+            onAnimationEnd={() => {
+              setVisible(false);
+            }}
+          />
+        ) : (
+          <MyDrawer />
+        )}
       </NavigationContainer>
     </SafeAreaProvider>
   );

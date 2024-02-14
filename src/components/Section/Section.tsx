@@ -4,12 +4,20 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
+  isHeader?: boolean;
 }>;
 
-function Section({children, title}: SectionProps): React.JSX.Element {
+function Section({
+  children,
+  title,
+  isHeader = false,
+}: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
-    <View style={styles.sectionContainer}>
+    <View
+      style={
+        isHeader ? styles.headerSectionContainer : styles.sectionContainer
+      }>
       <Text
         style={[
           styles.sectionTitle,
@@ -34,8 +42,19 @@ function Section({children, title}: SectionProps): React.JSX.Element {
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+    margin: 0,
+    padding: 10,
+    alignItems: 'center',
+    flexDirection: 'column',
+    display: 'flex',
+  },
+  headerSectionContainer: {
+    margin: 0,
+    padding: 10,
+    alignItems: 'center',
+    flexDirection: 'column',
+    display: 'flex',
+    backgroundColor: 'red',
   },
   sectionTitle: {
     fontSize: 24,
