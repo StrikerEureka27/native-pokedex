@@ -17,8 +17,28 @@ export const PokemonsTypesColors: { [key: string]: Array<string> } = {
     FAIRY: ['#f0b6bc', '#f8d2dc', '#fce6e8'],
     DARK: ['#705848', '#a09078', '#c0b8a0'],
     GROUND: ['#e0c068', '#f0d86b', '#f8e6a8'],
-  
 }
+
+export const PokemonSingleColor = {
+	normal: '#A8A77A',
+	fire: '#EE8130',
+	water: '#6390F0',
+	electric: '#F7D02C',
+	grass: '#7AC74C',
+	ice: '#96D9D6',
+	fighting: '#C22E28',
+	poison: '#A33EA1',
+	ground: '#E2BF65',
+	flying: '#A98FF3',
+	psychic: '#F95587',
+	bug: '#A6B91A',
+	rock: '#B6A136',
+	ghost: '#735797',
+	dragon: '#6F35FC',
+	dark: '#705746',
+	steel: '#B7B7CE',
+	fairy: '#D685AD',
+};
 
 
 

@@ -1,4 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../../components/Button/BackButton';
 import NavigationTabs from '../../components/Tabs/TabsNavigation';
@@ -10,8 +16,8 @@ import {useQuery} from '@tanstack/react-query';
 import {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {SvgUri} from 'react-native-svg';
-import Star from '../../assets/icons/Star.svg';
-
+import BoldStar from '../../assets/icons/BoldStar.svg';
+import {PokemonsTypesColors} from '../../styles/colors.config';
 
 function PokemonDetail({route}): JSX.Element {
   const navigation = useNavigation();
@@ -24,13 +30,13 @@ function PokemonDetail({route}): JSX.Element {
     return unsubscribe;
   }, [navigation]);
 
-  const {pokemonName} = route.params;
+  const {pokemonName, pokemonType} = route.params;
 
   const getPokemonWithTs = () =>
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`).then(res =>
       res.json(),
     );
-    
+
   const {isPending, error, data, refetch} = useQuery({
     queryKey: ['repoData'],
     queryFn: getPokemonWithTs,
@@ -65,19 +71,21 @@ function PokemonDetail({route}): JSX.Element {
         <LinearGradient
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
-          colors={['#19c4ac', '#56ccb1', '#9fe0b9']}>
+          colors={PokemonsTypesColors[pokemonType]}>
           <View style={styles.headerContainer}>
-            <TouchableOpacity style={styles.backButton}>
-              <BackButton />
-            </TouchableOpacity>
+            <BackButton />
             <Text style={styles.headerTitle}>{data.name}</Text>
-            <Text style={styles.headerTitle}> 
-              <Star width={40} height={40}  fill="white"/>
-             </Text>
+            <Text style={styles.headerTitle}>
+              <BoldStar width={20} height={20} fill="white" />
+            </Text>
           </View>
 
           <View style={styles.imageFrame}>
-            <SvgUri width="250" height="250" uri={data.sprites.other?.dream_world.front_default} />
+            <SvgUri
+              width="250"
+              height="250"
+              uri={data.sprites.other?.dream_world.front_default}
+            />
           </View>
 
           <View style={styles.detailsContainer}>
@@ -87,7 +95,7 @@ function PokemonDetail({route}): JSX.Element {
           </View>
         </LinearGradient>
       ) : (
-        <Text>Is loading</Text>
+        <ActivityIndicator size="large" />
       )}
     </View>
   );
@@ -99,6 +107,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   headerContainer: {
+    marginTop: 40,
     padding: 15,
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -120,9 +129,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 40,
     backgroundColor: 'white',
     flexDirection: 'column',
-  },
-  backButton: {
-    backgroundColor: 'white',
   },
 });
 

@@ -1,11 +1,20 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
-import PokemonCard from '../PokemonCard/PokemonCard';
-import {ScrollView} from 'react-native-gesture-handler';
+import {
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {fetchPokemons} from './PokemonSlice';
+import React, {useEffect, useState} from 'react';
+import {IPokemon} from '../../models/Pokemon.model';
+import PokemonCard from '../PokemonCard/PokemonCard';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {useEffect} from 'react';
 
-function Pokemons(): React.JSX.Element {
+const windowHeight = Dimensions.get('window').height;
+
+const Pokemons = (): JSX.Element => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const pokemons = useAppSelector(state => state.pokemons);
 
@@ -14,30 +23,42 @@ function Pokemons(): React.JSX.Element {
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {pokemons.status === 'succeeded' && pokemons.data !== undefined ? (
-        <View>
-          {pokemons.data.map(pokemon => (
+        <FlatList
+          data={pokemons.data}
+          refreshing={isLoading}
+          onRefresh={() => {
+            dispatch(fetchPokemons());
+          }}
+          renderItem={({item}) => (
             <PokemonCard
-              key={pokemon.name}
-              id={pokemon.id}
-              name={pokemon.name}
-              sprites={pokemon.sprites}
-              types={pokemon.types}
+              id={item.id}
+              name={item.name}
+              sprites={item.sprites}
+              types={item.types}
             />
-          ))}
-        </View>
+          )}
+          keyExtractor={item => item.name}
+        />
       ) : (
-        <Text>Loading</Text>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" />
+        </View>
       )}
-    </ScrollView>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     margin: 0,
     padding: 0,
+  },
+  loadingContainer: {
+    height: windowHeight / 2,
+    alignContent: 'center',
+    justifyContent: 'center',
   },
 });
 

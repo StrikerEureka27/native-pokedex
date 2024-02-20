@@ -51,6 +51,7 @@ function MyDrawer() {
         component={PokemonDetail}
         options={{
           title: 'Details',
+          headerShown: false,
           drawerItemStyle: {
             display: 'none',
           },

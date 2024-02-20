@@ -9,18 +9,21 @@ import {PokemonsTypesColors} from '../../styles/colors.config';
 
 function PokemonCard(pokemon: IPokemonCard): React.JSX.Element {
   const navigation = useNavigation();
+
+  const pokemonType = pokemon.types[0].type.name.toUpperCase();
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       style={styles.pokemonContainer}
       onPress={() => {
-        navigation.navigate('PokemonDetail', {pokemonName: pokemon.name});
+        navigation.navigate('PokemonDetail', {pokemonName: pokemon.name, pokemonType: pokemonType});
       }}>
       {pokemon.types !== undefined ? (
         <LinearGradient
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
-          colors={PokemonsTypesColors[pokemon.types[0].type.name.toUpperCase()]}
+          colors={PokemonsTypesColors[pokemonType]}
           style={styles.linearGradient}>
           <PokemonInfo
             id={pokemon.id}

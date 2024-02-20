@@ -1,7 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import Chip from '../../components/Chip/Chip';
 import {IPokemonInfo} from '../../models/Pokemon.model';
-import {useState} from 'react';
 
 function PokemonInfo({id, name, types}: IPokemonInfo): React.JSX.Element {
 
@@ -17,10 +16,8 @@ function PokemonInfo({id, name, types}: IPokemonInfo): React.JSX.Element {
         {types != undefined ? (
           types.map(type => (
             <Chip
-              key={id + Math.round(Math.random() * 100)}
+              key={id + Math.round(Math.random() * 1000)}
               name={type.type.name}
-              color="#eb96a1"
-              fontColor="white"
             />
           ))
         ) : (

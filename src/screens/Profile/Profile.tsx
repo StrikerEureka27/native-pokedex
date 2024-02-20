@@ -1,31 +1,11 @@
-import {useState} from 'react';
 import {
-  FlatList,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  View,
 } from 'react-native';
 
 const Profile = (): JSX.Element => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = useState<string>();
-
-  const renderItem = ({item}: {item: ItemData}) => {
-    
-    const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#f9c2ff';
-    const color = item.id === selectedId ? 'white' : 'black';
-
-    return (
-      <Item
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-        backgroundColor={backgroundColor}
-        textColor={color}
-      />
-    );
-  };
 
   const DATA = [
     {
@@ -50,42 +30,12 @@ const Profile = (): JSX.Element => {
     },
   ];
 
-  type ItemData = {
-    id: string;
-    title: string;
-  };
 
-  type ItemProps = {
-    item: ItemData;
-    onPress: () => void;
-    backgroundColor: string;
-    textColor: string;
-  };
-
-  const Item = ({item, onPress, backgroundColor, textColor}: ItemProps) => (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.item, {backgroundColor}]}>
-      <Text style={[styles.title, {color: textColor}]}>{item.title}</Text>
-    </TouchableOpacity>
-  );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={DATA}
-        refreshing={isLoading}
-        onRefresh={() => {
-          console.log('refresh!')
-          setTimeout(()=>{
-            setIsLoading(false);
-          },5000)
-        }}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        extraData={selectedId}
-      />
-    </SafeAreaView>
+    <View>
+      <Text>Hello from profile component!</Text>
+    </View>
   );
 };
 

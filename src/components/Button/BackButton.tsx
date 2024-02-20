@@ -1,25 +1,23 @@
 import React from 'react';
 import {Button, StyleSheet, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import AngleSmallLeft  from '../../assets/icons/AngleSmallLeft.svg';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Arrow from '../../assets/icons/Arrow.svg';
 
 const BackButton = (): JSX.Element => {
   const navigation = useNavigation();
 
-  
-
-  return <TouchableOpacity  onPress={() => navigation.goBack()} >
-    <AngleSmallLeft style={styles.container} width={40} height={40}  fill="white"/>
-  </TouchableOpacity>;
-}
+  return (
+    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.goBack()}>
+      <Arrow width={30} height={30} />
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    width: 10,
-    height: 10,
-    backgroundColor: 'black'
-  }
-})
+    backgroundColor: '#19c4ac',
+  },
+});
 
 export default BackButton;
