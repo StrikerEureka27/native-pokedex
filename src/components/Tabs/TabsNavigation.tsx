@@ -1,5 +1,4 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import Moves from '../../screens/Moves/Moves';
 import {
   Dimensions,
   StyleSheet,
@@ -7,16 +6,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Abilities from '../../screens/Abilities/Abilities';
-import Items from '../../screens/Items/Items';
-import Pokemons from '../../screens/Pokemons/Pokemons';
+import {ICreateTab, MaterialTopTabParamsList} from '../../models/types';
 
-function MyCustomTabs({
+function CustomTabs({
   state,
   descriptors,
   navigation,
   position,
 }): React.JSX.Element {
+  
   return (
     <View
       style={{
@@ -24,8 +22,13 @@ function MyCustomTabs({
         alignItems: 'center',
         flexDirection: 'row',
       }}>
-      {state.routes.map((route, index) => (
-        <TouchableOpacity
+      {state.routes.map((route, index) => {
+
+        const { key } = route;
+
+        return (
+          <TouchableOpacity
+          key={key}
           accessibilityRole="button"
           onPress={() => {
             navigation.navigate(route.name);
@@ -33,39 +36,33 @@ function MyCustomTabs({
           style={{
             margin: 10,
             borderBottomWidth: state.index === index ? 3 : 0,
-            borderBottomColor: 'red'
+            borderBottomColor: 'red',
           }}>
-          <Text style={styles.tabText} > {route.name} </Text>
+          <Text style={styles.tabText}> {route.name} </Text>
         </TouchableOpacity>
-      ))}
+        )
+      })}
     </View>
   );
 }
 
-const Tab = createMaterialTopTabNavigator();
+const CustomTabNavigator = createMaterialTopTabNavigator<MaterialTopTabParamsList>();
 
-function NavigationTabs(): React.JSX.Element {
+function NavigationTabs({tabs, idTab}): JSX.Element {
   return (
-    <Tab.Navigator
-      id="TabNavigator"
-      initialRouteName="Pokemon"
-      initialLayout={{
-        width: Dimensions.get('window').width,
-      }}
+    <CustomTabNavigator.Navigator
+      id={idTab}
+      initialRouteName="Pokémons"
       style={styles.tabsStyle}
-      tabBar={MyCustomTabs}>
-      <Tab.Screen name="Pokémons" component={Pokemons} />
-      <Tab.Screen name="Abilities" component={Abilities} />
-      <Tab.Screen name="Moves" component={Moves} />
-      <Tab.Screen name="Items" component={Items} />
-    </Tab.Navigator>
+      tabBar={CustomTabs}>
+      {tabs.map(tab => (
+        <CustomTabNavigator.Screen key={tab.key} name={tab.name} component={tab.component} />
+      ))}
+    </CustomTabNavigator.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
-  tabsStyle: {
-    height: 80,
-  },
   tabContainer: {
     padding: 10,
     paddingLeft: 20,
@@ -82,9 +79,8 @@ const styles = StyleSheet.create({
 
   tabText: {
     fontWeight: 'bold',
-    color: 'red'
-  }
-
+    color: 'red',
+  },
 });
 
 export default NavigationTabs;

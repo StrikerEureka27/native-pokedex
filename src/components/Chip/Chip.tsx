@@ -4,17 +4,17 @@ import { StyleSheet, Text, View } from "react-native";
 export type Colors = 'red' | 'blue' | 'yellow' | 'green' | 'purple' | 'white' | '#FF69A9' | '#eb96a1';
 
 type IChip = {
-    title: string, 
+    name: string, 
     color: Colors,
     fontColor: Colors,
 };
 
 
-function Chip ({ title, color, fontColor }: IChip):React.JSX.Element{
+function Chip ({ name, color, fontColor }: IChip):React.JSX.Element{
 
     return (
         <View style={[styles.container, { backgroundColor: color }]} >
-            <Text style={[{color: fontColor}]} >{title}</Text>
+            <Text style={[{color: fontColor}]} >{name}</Text>
         </View>
     );
 };

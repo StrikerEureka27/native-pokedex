@@ -3,27 +3,35 @@ import PokemonInfo from './PokemonInfo';
 import PokemonFrame from './PokemonFrame';
 import LinearGradient from 'react-native-linear-gradient';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {IPokemonCard} from '../../models/Pokemon.model';
+import {PokemonsTypesColors} from '../../styles/colors.config';
 
-function PokemonCard(): React.JSX.Element {
-
+function PokemonCard(pokemon: IPokemonCard): React.JSX.Element {
   const navigation = useNavigation();
-
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       style={styles.pokemonContainer}
       onPress={() => {
-        navigation.navigate('PokemonDetail', {itemId: 1});
+        navigation.navigate('PokemonDetail', {pokemonName: pokemon.name});
       }}>
-      <LinearGradient
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}
-        colors={['#19c4ac', '#56ccb1', '#9fe0b9']}
-        style={styles.linearGradient}>
-        <PokemonInfo />
-        <PokemonFrame />
-      </LinearGradient>
+      {pokemon.types !== undefined ? (
+        <LinearGradient
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          colors={PokemonsTypesColors[pokemon.types[0].type.name.toUpperCase()]}
+          style={styles.linearGradient}>
+          <PokemonInfo
+            id={pokemon.id}
+            name={pokemon.name}
+            types={pokemon.types}
+          />
+          <PokemonFrame sprites={pokemon.sprites} />
+        </LinearGradient>
+      ) : (
+        <Text>Loading</Text>
+      )}
     </TouchableOpacity>
   );
 }
@@ -33,7 +41,6 @@ const styles = StyleSheet.create({
     margin: 10,
     height: 120,
     borderRadius: 10,
-    backgroundColor: 'red',
     justifyContent: 'space-between',
     flexDirection: 'row',
     display: 'flex',

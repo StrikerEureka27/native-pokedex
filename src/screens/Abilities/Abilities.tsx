@@ -11,7 +11,6 @@ function Abilities(): React.JSX.Element {
       <Section title='Abilities' >
           <Text>Abilities</Text>
       </Section>
-        <PokemonCard />
       </ScrollView>
     </View>
   );
